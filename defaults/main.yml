@@ -1,14 +1,15 @@
 ---
-tor_config: /etc/tor/torrc
+tor_config_path: /etc/tor
 
 # Can easily override these with group_vars/host_vars if hosts have varying bandwidth allowances
 tor_AccountingMax: '999 GB'
-tor_RelayBandwidthRate: '385 KB'
-tor_RelayBandwidthBurst: '1540 KB'
 tor_AccountingStart: 'month 1 00:00'
+tor_RelayBandwidthRate: 0
+tor_RelayBandwidthBurst: 0
 
 # selinux default allowed ports for tor can be found at
 # http://www.unix.com/man-page/centos/8/tor_selinux/
-tor_orport: 9001
-tor_dirport: 9030
+tor_ORPort: 9001
+tor_DirPort: 9030
+tor_SocksPort: 0    # 0 to disable, if you don't need a local Socks connection to tor
 tor_ExitPolicy: 'reject *:*'

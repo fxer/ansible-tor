@@ -1,0 +1,25 @@
+---
+# Great examples for Ansible+tor at https://github.com/nusenu/ansible-relayor/
+- name: Install Tor
+  package:
+    name: tor
+    state: latest
+
+- name: Configure SELinux for Tor
+  seboolean:
+    name: tor_can_network_relay
+    state: yes
+    persistent: yes
+  when: ansible_selinux.status != 'disabled'
+
+- name: Configure torrc
+  template:
+    src: torrc
+    dest: "{{ tor_config_path }}/torrc"
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+    validate: "tor --verify-config -f %s"
+  notify:
+    - restart tor

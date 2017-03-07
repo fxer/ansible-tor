@@ -16,19 +16,12 @@ ContactInfo {{ tor_ContactInfo }}
 MyFamily {{ tor_MyFamily }}
 {% endif %}
 
-ORPort {{ tor_orport }}
-DirPort {{ tor_dirport }}
+ORPort {{ tor_ORPort }}
+DirPort {{ tor_DirPort }}
+SocksPort {{ tor_SocksPort }}
 ExitPolicy {{ tor_ExitPolicy }}
 
-{% if tor_AccountingMax is defined %}
 AccountingMax {{ tor_AccountingMax }}
-{% endif %}
-{% if tor_AccountingStart is defined %}
 AccountingStart {{ tor_AccountingStart }}
-{% endif %}
-{% if tor_RelayBandwidthRate is defined %}
 RelayBandwidthRate {{ tor_RelayBandwidthRate }}
-{% endif %}
-{% if tor_RelayBandwidthBurst is defined %}
 RelayBandwidthBurst {{ tor_RelayBandwidthBurst }}
-{% endif %}
