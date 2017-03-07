@@ -7,9 +7,18 @@ tor_AccountingStart: 'month 1 00:00'
 tor_RelayBandwidthRate: 0
 tor_RelayBandwidthBurst: 0
 
-# selinux default allowed ports for tor can be found at
-# http://www.unix.com/man-page/centos/8/tor_selinux/
-tor_ORPort: 9001
-tor_DirPort: 9030
-tor_SocksPort: 0    # 0 to disable, if you don't need a local Socks connection to tor
+# SELinux default Tor allowed ports:
+#   semanage port -l | grep ^tor_port_t
+#     tor_port_t  tcp  6969, 9001, 9030, 9050, 9051, 9150
+#
+# Additionally this role sets the "tor_can_network_relay" seboolean
+# which allows Tor to bind ports of type "http_port_t":
+#   semanage port -l | grep ^http_port_t
+#     http_port_t   tcp  80, 81, 443, 488, 8008, 8009, 8443, 9000
+#
+# Whichever ports you choose make sure they are open in your firewall
+tor_ORPort: 443   # Tor default: 9001
+tor_DirPort: 80   # Tor default: 9030
+
+tor_SocksPort: 0  # 0 to disable, if you don't need a local Socks connection to Tor
 tor_ExitPolicy: 'reject *:*'
